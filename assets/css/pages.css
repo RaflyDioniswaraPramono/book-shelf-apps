@@ -1,0 +1,162 @@
+.pages {
+  padding: 1rem;
+  display: none;
+}
+
+.pages.show {  
+  display: block;  
+}
+
+.pages-header {  
+  margin-bottom: 1.8rem;  
+}
+
+.pages-header h2 {
+  margin-bottom: 0.5rem;
+}
+
+.pages-header p {
+  font-size: 0.9rem;
+  color: rgb(91, 91, 91);
+}
+
+.pages-content {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 5%;
+}
+
+.pages-content-box {
+  padding: 3.4rem 2.2rem;  
+  width: 100%;  
+  color: #fffffe;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pages-content-box i {
+  font-size: 5rem;
+  opacity: 0.6;
+  filter: drop-shadow(0 0 2px white);
+}
+
+.info h1 {
+  margin-bottom: 0.4rem;
+}
+
+.bookshelf {
+  padding: 1rem;
+  display: none;
+  position: relative;
+}
+
+.bookshelf.show {
+  display: block;
+}
+
+.bookshelf-content {
+  display: grid;
+  grid-template-columns: 37.5% 57.5%;
+  gap: 5%;
+}
+
+.bookshelf-content-form h3 {
+  margin-bottom: 1rem;
+}
+
+.form-box {
+  margin-bottom: 1rem;
+}
+
+.form-box label {
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.form-box input {
+  padding: 0.8rem 0.5rem;
+  outline: none;
+  border: none;
+  background-color: rgb(232, 232, 232);
+  width: 100%;
+}
+
+.form-box-btn .add-btn {
+  margin-top: 2rem;
+  padding: 0.8rem 0.5rem;
+  width: 200px;
+  background-color: rgb(64, 80, 144);  
+  color: #fffffe;
+  cursor: pointer;
+}
+
+.form-box-btn .add-btn:hover {  
+  background-color: #232946;
+}
+
+.bookshelf-container h3 {
+  margin-bottom: 1rem;
+}
+
+.bookshelf-read {
+  margin-bottom: 2rem;
+  height: 200px;
+  overflow: auto;
+}
+
+.bookshelf-unread {
+  height: 200px;
+  overflow: auto;
+}
+
+table {
+  width: 100%;
+  table-layout: auto;   
+}
+
+table .table-header {
+  background-color: #232946;
+  color: #fffffe;
+}
+
+.bookshelf-read table, 
+.bookshelf-read tr, 
+.bookshelf-read th, 
+.bookshelf-read td {
+  padding: 0.8rem;
+  border: 0.1rem solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.bookshelf-read .fa-trash-can,
+.bookshelf-unread .fa-trash-can {
+  color: red;
+}
+
+.bookshelf-unread table, 
+.bookshelf-unread tr, 
+.bookshelf-unread th, 
+.bookshelf-unread td {
+  padding: 0.8rem;
+  border: 0.1rem solid black;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+
+.bookshelf-read button, 
+.bookshelf-unread button {
+  cursor: pointer;
+}
+
+#complete {
+  padding: 0.8rem 0.5rem;
+  width: 100%;  
+}
+
+#complete option {
+  padding: 1rem;
+}
+

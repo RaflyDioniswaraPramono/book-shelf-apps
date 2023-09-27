@@ -1,0 +1,32 @@
+.alert-box {
+  position: absolute;  
+  top: 5%;
+  right: 5%;  
+  padding: 1rem 2rem;
+  display: none;
+  color: #fffffe;
+  animation: fade 0.5s ease forwards;
+  border-radius: 0.5rem;  
+}
+
+.alert-box.success {  
+  background-color: darkgreen;  
+  box-shadow: 0 0 5px darkgreen;
+  display: block;  
+}
+
+.alert-box.error {  
+  background-color: rgb(190, 32, 32);  
+  box-shadow: 0 0 5px rgb(190, 32, 32);
+  display: block;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

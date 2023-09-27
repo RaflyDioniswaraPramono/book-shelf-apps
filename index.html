@@ -3,36 +3,229 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Book shelf apps for storing book datas" />
-    <meta name="author" content="Rafly Dioniswara Pramono" />
+    <title>Document</title>
 
-    <title>Books Shelf Apps</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/layout.css" />
+    <link rel="stylesheet" href="./assets/css/sidenavbar.css" />
+    <link rel="stylesheet" href="./assets/css/topnavbar.css" />
+    <link rel="stylesheet" href="./assets/css/pages.css" />
+    <link rel="stylesheet" href="./assets/css/alert.css" />
 
-    <link rel="stylesheet" href="./assets/css/styles.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
-  <body>
-    <div class="topnavbar">
-
+  <body>    
+    <div id="remove-box" class="alert-remove-book">
+      <p id="remove-warn-text"></p>
+      <button>Remove</button>
+      <button>Back</button>
     </div>
-
-    <header>
-
-    </header>
-
-    <main>
-      <aside>
-
+    <main id="main" class="main show">
+      <aside id="sidenav" class="sidenav show">
+        <div class="sidenavbar-header">
+          <a href="/">
+            <h2>Bookshelf Apps</h2>
+          </a>
+        </div>
+        <div class="sidenavbar-links">
+          <p>Menus</p>
+          <button
+            id="dropdown"
+            class="btn-dropdown"
+            onclick=openDropdownDashboard()
+          >
+            Dashboard
+            <i id="icon-dashboard" class="fa-solid fa-caret-down show"></i>
+          </button>
+          <div id="dashboard-box" class="subcontent-dashboard show">
+            <button
+              id="btn-main"
+              class="btn active"
+              onclick="changePages('main')"
+            >
+              Main
+            </button>
+            <button id="btn-book" class="btn" onclick="changePages('books')">
+              Bookshelf
+            </button>
+          </div>
+          <p>Settings</p>
+          <button
+            id="dropdown"
+            class="btn-dropdown"
+            onclick="openDropdownTheme()"
+          >
+            Themes <i id="icon-theme" class="fa-solid fa-caret-right"></i>
+          </button>
+          <div id="theme-box" class="subcontent-themes">
+            <button>
+              <i class="fa-regular fa-sun"></i>Light Theme (default)
+            </button>
+            <button><i class="fa-solid fa-moon"></i>Dark Theme</button>
+          </div>
+        </div>
       </aside>
-
       <div class="content">
-
+        <div class="topnavbar">
+          <div class="topnavbar-toggle">
+            <a href="##" onclick="openSidenav()">
+              <i class="fa-solid fa-bars-staggered"></i>
+            </a>
+          </div>
+          <div class="topnavbar-menus">
+            <a href="##">
+              <i class="fa-regular fa-envelope"></i>
+            </a>
+            <a href="##">
+              <i class="fa-solid fa-bell"></i>
+            </a>
+            <a href="##">
+              <i class="fa-solid fa-circle-user"></i>
+            </a>
+          </div>
+        </div>        
+        <div id="main-page" class="pages">          
+          <div class="pages-header">            
+            <h2>Main Page</h2>
+            <p>
+              In this pages you can see the amount of books, amount of books
+              after read and before
+            </p>
+          </div>
+          <div class="pages-content">
+            <div
+              class="pages-content-box"
+              style="
+                background-color: #252678;
+                filter: drop-shadow(0 0 5px #252678);
+              "
+            >
+              <div class="info">
+                <h1 id="total-books"></h1>
+                <p>Total Book</p>
+              </div>
+              <i class="fa-solid fa-book"></i>
+            </div>
+            <div
+              class="pages-content-box"
+              style="
+                background-color: #247533;
+                filter: drop-shadow(0 0 5px #247533);
+              "
+            >
+              <div class="info">
+                <h1 id="total-read">0</h1>
+                <p>Read Book</p>
+              </div>
+              <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+            <div
+              class="pages-content-box"
+              style="
+                background-color: #ef4565;
+                filter: drop-shadow(0 0 5px #ef4565);
+              "
+            >
+              <div class="info">
+                <h1 id="total-unread">0</h1>
+                <p>Unread Book</p>
+              </div>
+              <i class="fa-solid fa-square-xmark"></i>
+            </div>
+          </div>
+        </div>
+        <div id="book-page" class="bookshelf show">
+          <div id="alert" class="alert-box">
+            <h1 id="alert-type"></h1>
+            <p id="alert-text"></p>
+          </div>
+          <div class="pages-header">
+            <h2>Bookshelf</h2>
+            <p>
+              In this pages you can create, moving, finished, and unred books by
+              fill the field.
+            </p>
+            <p class="note">
+              <strong>Note</strong> : you only have 2 books shelf. One for read
+              books and one for unread books.
+            </p>
+          </div>
+          <div class="bookshelf-content">
+            <div class="bookshelf-content-form">
+              <h3>Bookshelf Registry</h3>
+              <form onsubmit="event.preventDefault()">
+                <div class="form-box">
+                  <label for="title">Title</label>
+                  <input id="title" type="text" autocomplete="off" required autofocus/>
+                </div>
+                <div class="form-box">
+                  <label for="author">Author</label>
+                  <input id="author" type="text" autocomplete="off" required />
+                </div>
+                <div class="form-box">
+                  <label for="year">Year</label>
+                  <input id="year" type="text" autocomplete="off" required />
+                </div>
+                <div class="form-box">
+                  <label for="complete">Is Complete?</label>
+                  <select name="complete" id="complete">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                  </select>
+                </div>
+                <div class="form-box-btn">
+                  <button class="add-btn" onclick="submitHandler()">Add</button>
+                </div>
+              </form>
+            </div>
+            <div class="bookshelf-container">
+              <h3>Selesai dibaca</h3>
+              <div class="bookshelf-read">
+                <table id="table">
+                  <thead>
+                    <tr class="table-header">                      
+                      <th>Title</th>
+                      <th>Author</th>
+                      <th>Year</th>
+                      <th>Is Complete</th>
+                      <th>Delete</th>
+                      <th>Move</th>
+                    </tr>
+                  </thead>
+                  <tbody id="read-table-body"></tbody>
+                </table>
+              </div>
+              <h3>Belum selesai dibaca</h3>
+              <div class="bookshelf-unread">
+                <table>
+                  <thead>
+                    <tr class="table-header">                      
+                      <th>Title</th>
+                      <th>Author</th>
+                      <th>Year</th>
+                      <th>Is Complete</th>
+                      <th>Delete</th>
+                      <th>Move</th>
+                    </tr>
+                  </thead>
+                  <tbody id="unread-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
-    <footer>
-
-    </footer>
-
-    <script src="./index.js"></script>
+    <script src="./assets/js/openSidenav.js"></script>
+    <script src="./assets/js/openDropdown.js"></script>
+    <script src="./assets/js/changePages.js"></script>
+    <script src="./assets/js/formHandler.js"></script>
   </body>
 </html>

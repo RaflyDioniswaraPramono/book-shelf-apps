@@ -1,0 +1,29 @@
+.topnavbar {  
+  color: black;
+  background-color: whitesmoke;
+  display: grid;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;  
+}
+
+.topnavbar-toggle {
+  display: flex;
+  align-items: center;
+}
+
+.topnavbar a {
+  color: black;
+}
+
+.topnavbar-menus {
+  display: flex;
+  align-items: center;
+}
+
+.topnavbar-menus a {  
+  line-height: 0;  
+  margin-left: 2rem;
+  font-size: 1.5rem;
+}

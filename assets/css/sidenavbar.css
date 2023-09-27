@@ -1,0 +1,77 @@
+.sidenav {
+  display: none;
+}
+
+.sidenav.show {
+  display: block;
+  background-color: whitesmoke;
+  height: 100vh;
+}
+
+.sidenavbar-header {
+  background-color: #232946;
+  padding: 1rem;  
+}
+
+.sidenavbar-header a {  
+  color: #fffffe;
+}
+
+.sidenavbar-header a:hover {  
+  color: #b8c1ec;
+}
+
+.sidenavbar-links p {
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #7a7a7a;
+}
+
+.btn-dropdown {
+  width: 100%;
+  padding: 1rem;
+  text-align: start;
+  background-color: inherit;
+  border-radius: 0;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-dropdown:hover,
+.btn.active {
+  background-color: rgb(212, 212, 212);
+}
+
+.subcontent-dashboard,
+.subcontent-themes {
+  display: none;
+}
+
+.subcontent-dashboard.show,
+.subcontent-themes.show {
+  display: block;
+}
+
+.subcontent-dashboard i,
+.subcontent-themes {
+  margin-right: 1rem;
+}
+
+.subcontent-dashboard button,
+.subcontent-themes button {
+  width: 100%;
+  padding: 1rem 2rem;
+  text-align: start;
+  background-color: inherit;
+  border-radius: 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.subcontent-dashboard button:hover,
+.subcontent-themes button:hover {
+  background-color: rgb(212, 212, 212);
+}
