@@ -20,12 +20,7 @@
       referrerpolicy="no-referrer"
     />
   </head>
-  <body>    
-    <div id="remove-box" class="alert-remove-book">
-      <p id="remove-warn-text"></p>
-      <button>Remove</button>
-      <button>Back</button>
-    </div>
+  <body>        
     <main id="main" class="main show">
       <aside id="sidenav" class="sidenav show">
         <div class="sidenavbar-header">
@@ -38,7 +33,7 @@
           <button
             id="dropdown"
             class="btn-dropdown"
-            onclick=openDropdownDashboard()
+            onclick="openDropdownDashboard()"
           >
             Dashboard
             <i id="icon-dashboard" class="fa-solid fa-caret-down show"></i>
@@ -159,7 +154,7 @@
           <div class="bookshelf-content">
             <div class="bookshelf-content-form">
               <h3>Bookshelf Registry</h3>
-              <form onsubmit="event.preventDefault()">
+              <form onsubmit="submitHandler(event.preventDefault())">
                 <div class="form-box">
                   <label for="title">Title</label>
                   <input id="title" type="text" autocomplete="off" required autofocus/>
@@ -180,7 +175,7 @@
                   </select>
                 </div>
                 <div class="form-box-btn">
-                  <button class="add-btn" onclick="submitHandler()">Add</button>
+                  <button class="add-btn" type="submit">Add</button>
                 </div>
               </form>
             </div>
@@ -227,5 +222,6 @@
     <script src="./assets/js/openDropdown.js"></script>
     <script src="./assets/js/changePages.js"></script>
     <script src="./assets/js/formHandler.js"></script>
+    <script src="./assets/js/getLocalStorageBook.js"></script>
   </body>
 </html>
