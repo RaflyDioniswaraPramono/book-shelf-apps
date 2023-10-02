@@ -49,19 +49,43 @@ const submitHandler = async () => {
       isComplete: isComplete,
     };
 
+    var regexNumberOnly = /^\d+$/;
+    if (!year.match(regexNumberOnly)) {
+      return errorHandler({
+        type: "error",
+        message: "Year must be number only!"
+      })
+    }
+
     if (datas.isComplete === "true") {
       saveReadBook(datas);
       createElementReadBooks(datas);
     } else {
       saveUnreadBook(datas);
       createElementUnreadBooks(datas);
-    }
-
-    return window.location.reload();
+    }    
   } catch (error) {
     throw error;
   }
 };
+
+const errorHandler = async (validation) => {
+  try {
+    const { type, message } = await validation;
+
+    document.getElementById("alert").classList.add(type);
+    document.getElementById("alert-type").innerText = type;
+    document.getElementById("alert-text").innerText = message;
+
+    setTimeout(() => {
+      document.getElementById("alert").classList.remove(type);
+
+      return window.location.reload();
+    }, 3000)
+  } catch (error) {
+    throw error;
+  }
+}
 
 const saveReadBook = async (datas) => {
   try {
@@ -70,6 +94,8 @@ const saveReadBook = async (datas) => {
     if (readBookShelf.length > 0) {
       localStorage.setItem("readBookItems", JSON.stringify(readBookShelf));
     }
+
+    return window.location.reload();
   } catch (error) {
     throw error;
   }
@@ -82,6 +108,8 @@ const saveUnreadBook = async (datas) => {
     if (unreadBookShelf.length > 0) {
       localStorage.setItem("unreadBookItems", JSON.stringify(unreadBookShelf));
     }
+
+    return window.location.reload();
   } catch (error) {
     throw error;
   }
