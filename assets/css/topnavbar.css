@@ -8,6 +8,11 @@
   padding: 1rem;  
 }
 
+.topnavbar.dark {  
+  color: #fffffe;
+  background-color: #0b0b0b;  
+}
+
 .topnavbar-toggle {
   display: flex;
   align-items: center;
@@ -15,6 +20,10 @@
 
 .topnavbar a {
   color: black;
+}
+
+.topnavbar a.dark {
+  color: #fffffe;
 }
 
 .topnavbar-menus {
@@ -26,4 +35,8 @@
   line-height: 0;  
   margin-left: 2rem;
   font-size: 1.5rem;
+}
+
+.topnavbar-menus a.dark {  
+  color: #fffffe;
 }

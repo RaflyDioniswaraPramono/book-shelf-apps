@@ -1,48 +1,36 @@
-let inputDataValues = {};
 let readBookShelf = [];
 let unreadBookShelf = [];
 
-window.onload = async () => {
-  const getReadBookItems = await JSON.parse(
-    localStorage.getItem("readBookItems")
-  );
-  const getUnreadBookItems = await JSON.parse(
-    localStorage.getItem("unreadBookItems")
-  );
+window.onload = () => {
+  const getReadBooks = JSON.parse(localStorage.getItem("readBookItems"));
+  const getUnreadBooks = JSON.parse(localStorage.getItem("unreadBookItems"));
 
-  if (getReadBookItems === null) {
-    createReadBookItemsLocalStorage();
+  if (getReadBooks === null) {
+    localStorage.setItem("readBookItems", JSON.stringify([]));
+  } else {
+    readBookShelf.push(...getReadBooks);
+
+    for (var i = 0; i < readBookShelf.length; i++) {
+      createElementReadBooks(readBookShelf[i]);
+    }
   }
 
-  if (getUnreadBookItems === null) {
-    createUnreadBookItemsLocalStorage();
+  if (getUnreadBooks === null) {
+    localStorage.setItem("unreadBookItems", JSON.stringify([]));
+  } else {
+    unreadBookShelf.push(...getUnreadBooks);
+
+    for (var i = 0; i < unreadBookShelf.length; i++) {
+      createElementUnreadBooks(unreadBookShelf[i]);
+    }
   }
 
-  return loadItemsFromLocalStorageToArray();
-};
-
-const createReadBookItemsLocalStorage = () => {
-  return localStorage.setItem("readBookItems", JSON.stringify([]));
-};
-
-const createUnreadBookItemsLocalStorage = () => {
-  return localStorage.setItem("unreadBookItems", JSON.stringify([]));
-};
-
-const loadItemsFromLocalStorageToArray = async () => {
-  const getReadBookItems = await JSON.parse(
-    localStorage.getItem("readBookItems")
-  );
-
-  const getUnreadBookItems = await JSON.parse(
-    localStorage.getItem("unreadBookItems")
-  );
-
-  readBookShelf = [...getReadBookItems];
-  unreadBookShelf = [...getUnreadBookItems];
-
-  createTableReadBooks();
-  createTableUnreadBooks();
+  const getThemes = localStorage.getItem("themes").toString();
+  if (getThemes == "dark") {
+    darkTheme("dark");
+  } else {
+    lightTheme(getThemes);
+  }
 };
 
 const submitHandler = async () => {
@@ -53,7 +41,7 @@ const submitHandler = async () => {
     const year = await document.getElementById("year").value;
     const isComplete = await document.getElementById("complete").value;
 
-    inputDataValues = {
+    const datas = {
       id: id,
       title: title,
       author: author,
@@ -61,216 +49,280 @@ const submitHandler = async () => {
       isComplete: isComplete,
     };
 
-    return valuesValidator();
-  } catch (error) {
-    throw error;
-  }
-};
-
-const valuesValidator = async () => {
-  var numberRegex = /^\d+$/;
-
-  try {
-    const { title, year, isComplete } = inputDataValues;
-
-    if (!year.match(numberRegex)) {
-      return validatorOutput({
-        type: "error",
-        message: "Year field must be numbers only!",
-      });
-    }
-
-    if (isComplete === "true") {
-      return validatorOutput({
-        type: "success",
-        message: `Add ${title} book succesfully to read bookshelf`,
-      });
+    if (datas.isComplete === "true") {
+      saveReadBook(datas);
+      createElementReadBooks(datas);
     } else {
-      return validatorOutput({
-        type: "success",
-        message: `Add ${title} book successfully to unread bookshelf!`,
-      });
+      saveUnreadBook(datas);
+      createElementUnreadBooks(datas);
+    }
+
+    return window.location.reload();
+  } catch (error) {
+    throw error;
+  }
+};
+
+const saveReadBook = async (datas) => {
+  try {
+    readBookShelf.push(await datas);
+
+    if (readBookShelf.length > 0) {
+      localStorage.setItem("readBookItems", JSON.stringify(readBookShelf));
     }
   } catch (error) {
     throw error;
   }
 };
 
-const validatorOutput = async (reportMessage) => {
+const saveUnreadBook = async (datas) => {
   try {
-    const { type, message } = await reportMessage;
+    unreadBookShelf.push(await datas);
 
-    document.getElementById("alert").classList.add(type);
-    document.getElementById("alert-type").innerText = type;
-    document.getElementById("alert-text").innerText = message;
-
-    setTimeout(() => {
-      document.getElementById("alert").classList.remove(type);
-    }, 3000);
-
-    return addBookToArray();
+    if (unreadBookShelf.length > 0) {
+      localStorage.setItem("unreadBookItems", JSON.stringify(unreadBookShelf));
+    }
   } catch (error) {
     throw error;
   }
 };
 
-const addBookToArray = () => {
-  const { isComplete } = inputDataValues;
+const createElementReadBooks = async (datas) => {
+  try {
+    const { id, title, author, year, isComplete } = await datas;
 
-  if (isComplete === "true") {
-    readBookShelf.unshift(inputDataValues);
-    addReadBookTable();
-
-    return addReadBook();
-  } else {
-    unreadBookShelf.unshift(inputDataValues);
-    addUnreadBookTable();
-
-    return addUnreadBook();
-  }
-};
-
-const addReadBook = async () => {
-  return localStorage.setItem("readBookItems", JSON.stringify(readBookShelf));
-};
-
-const addUnreadBook = async () => {
-  return localStorage.setItem(
-    "unreadBookItems",
-    JSON.stringify(unreadBookShelf)
-  );
-};
-
-const addReadBookTable = () => {
-  const { id, title, author, year, isComplete } = inputDataValues;
-
-  document.getElementById("read-table-body").innerHTML += `
-    <tr id="read-row-${id}">
-      <td>${title}</td>
-      <td>${author}</td>
-      <td>${year}</td>
-      <td>${isComplete}</td>
-      <td>
-        <button onclick="deleteReadBook(${id})">
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      </td>
-      <td>
-        <button>
-          <i class="fa-solid fa-maximize"></i>
-        </button>
-      </td>
-    </tr>
-  `;
-};
-
-const addUnreadBookTable = () => {
-  const { id, title, author, year, isComplete } = inputDataValues;
-
-  document.getElementById("unread-table-body").innerHTML += `
-    <tr id="read-row-${id}">
-      <td>${title}</td>
-      <td>${author}</td>
-      <td>${year}</td>
-      <td>${isComplete}</td>
-      <td>
-        <button onclick="deleteUnreadBook(${id})">
-          <i class="fa-solid fa-trash-can"></i>
-        </button>
-      </td>
-      <td>
-        <button>
-          <i class="fa-solid fa-maximize"></i>
-        </button>
-      </td>
-    </tr>
-  `;
-};
-
-const createTableReadBooks = async () => {
-  readBookShelf.map((items) => {
-    const { id, title, author, year, isComplete } = items;
-
-    document.getElementById("read-table-body").innerHTML += `
-      <tr id="read-row-${id}">
-        <td>${title}</td>
-        <td>${author}</td>
-        <td>${year}</td>
-        <td>${isComplete}</td>
-        <td>
-          <button onclick="deleteReadBook(${id})">
-            <i class="fa-solid fa-trash-can"></i>
-          </button>
-        </td>
-        <td>
-          <button>
-            <i class="fa-solid fa-maximize"></i>
-          </button>
-        </td>
-      </tr>
+    const container = document.getElementById("read-book-shelf");
+    container.innerHTML += `
+      <div class="read-box" id="read-box-${id}">
+        <p class="text-id">Book ID ${id}</p>
+        <div class="unread-box-comp">
+          <label>Book Title : </label>
+          <p>${title}</p>
+        </div>
+        <div class="unread-box-comp">
+          <label>Book Author : </label>
+          <p>${author}</p>
+        </div>
+        <div class="unread-box-comp">
+          <label>Year : </label>
+          <p>${year}</p>
+        </div>
+        <div class="unread-box-comp">
+          <label>Is Complete : </label>
+          <p>${isComplete}</p>
+        </div>
+        <div class="button-box">
+          <button class="hapus-btn" onclick="deleteReadBooks(${id})">Hapus Buku</button>
+          <button class="pindah-btn" onclick="moveReadBooks(${id})">Pindahkan Buku</button>
+        </div>
+      </div>
     `;
-  });
+  } catch (error) {
+    throw error;
+  }
 };
 
-const createTableUnreadBooks = async () => {
-  unreadBookShelf.map((items) => {
-    const { id, title, author, year, isComplete } = items;
+const createElementUnreadBooks = async (datas) => {
+  try {
+    const { id, title, author, year, isComplete } = await datas;
 
-    document.getElementById("unread-table-body").innerHTML += `
-      <tr id="unread-row-${id}">
-        <td>${title}</td>
-        <td>${author}</td>
-        <td>${year}</td>
-        <td>${isComplete}</td>
-        <td>
-          <button onclick="deleteUnreadBook(${id})">
-            <i class="fa-solid fa-trash-can"></i>
-          </button>
-        </td>
-        <td>
-          <button>
-            <i class="fa-solid fa-maximize"></i>
-          </button>
-        </td>
-      </tr>
+    const container = document.getElementById("unread-book-shelf");
+    container.innerHTML += `
+      <div class="read-box" id="unread-box-${id}">
+        <p class="text-id">Book ID ${id}</p>
+        <div class="unread-box-comp">
+          <label>Book Title : </label>
+          <p>${title}</p>
+        </div>
+        <div class="unread-box-comp">
+          <label>Book Author : </label>
+          <p>${author}</p>
+        </div>
+        <div class="unread-box-comp">
+          <label>Year : </label>
+          <p>${year}</p>
+        </div>
+        <div class="unread-box-comp">
+          <label>Is Complete : </label>
+          <p>${isComplete}</p>
+        </div>
+        <div class="button-box">
+          <button class="hapus-btn" onclick="deleteUnreadBooks(${id})">Hapus Buku</button>
+          <button class="pindah-btn" onclick="moveUnreadBooks(${id})">Pindahkan Buku</button>
+        </div>
+      </div>
     `;
-  });
+  } catch (error) {
+    throw error;
+  }
 };
 
-const deleteReadBook = async (ids) => {
-  document.getElementById(`read-row-${ids}`).remove();
+const deleteReadBooks = async (ids) => {
+  document.getElementById(`read-box-${ids}`).remove();
 
-  const getReadBookItems = await JSON.parse(
-    localStorage.getItem("readBookItems")
-  );
+  try {
+    const getReadBooks = await JSON.parse(
+      localStorage.getItem("readBookItems")
+    );
 
-  var findIndex = getReadBookItems.findIndex((objects) => objects.id === ids);
+    const index = getReadBooks.findIndex((object) => object.id === ids);
+    if (index > -1) {
+      getReadBooks.splice(index, 1);
+    }
 
-  if (findIndex > -1) {
-    getReadBookItems.splice(findIndex, 1);
+    localStorage.setItem("readBookItems", JSON.stringify(getReadBooks));
+
+    return window.location.reload();
+  } catch (error) {
+    throw error;
   }
-
-  return localStorage.setItem(
-    "readBookItems",
-    JSON.stringify(getReadBookItems)
-  );
 };
 
-const deleteUnreadBook = async (ids) => {
-  document.getElementById(`unread-row-${ids}`).remove();
+const deleteUnreadBooks = async (ids) => {
+  document.getElementById(`unread-box-${ids}`).remove();
 
-  const getUnreadBookItems = await JSON.parse(
-    localStorage.getItem("unreadBookItems")
-  );
+  try {
+    const getUnreadBooks = await JSON.parse(
+      localStorage.getItem("unreadBookItems")
+    );
 
-  var findIndex = getUnreadBookItems.findIndex((objects) => objects.id === ids);
+    const index = getUnreadBooks.findIndex((object) => object.id === ids);
+    if (index > -1) {
+      getUnreadBooks.splice(index, 1);
+    }
 
-  if (findIndex > -1) {
-    getUnreadBookItems.splice(findIndex, 1);
+    localStorage.setItem("unreadBookItems", JSON.stringify(getUnreadBooks));
+
+    return window.location.reload();
+  } catch (error) {
+    throw error;
   }
+};
 
-  return localStorage.setItem(
-    "unreadBookItems",
-    JSON.stringify(getUnreadBookItems)
-  );
+const moveReadBooks = async (ids) => {
+  document.getElementById(`read-box-${ids}`).remove();
+
+  try {
+    console.log(await ids);
+
+    let newUnreadArray = [];
+
+    const getReadBooks = await JSON.parse(
+      localStorage.getItem("readBookItems")
+    );
+
+    const findObj = await getReadBooks.findIndex((object) => {
+      object.id === ids;
+
+      return (object.isComplete = "false");
+    });
+
+    const findObjects = getReadBooks[findObj];
+    newUnreadArray.push(findObjects);
+    unreadBookShelf.push(...newUnreadArray);
+
+    const container = document.getElementById("unread-book-shelf");
+    newUnreadArray.map((newDatas) => {
+      const { id, title, author, year, isComplete } = newDatas;
+
+      container.innerHTML += `
+        <div class="read-box" id="unread-box-${id}">
+          <p class="text-id">Book ID ${id}</p>
+          <div class="unread-box-comp">
+            <label>Book Title : </label>
+            <p>${title}</p>
+          </div>
+          <div class="unread-box-comp">
+            <label>Book Author : </label>
+            <p>${author}</p>
+          </div>
+          <div class="unread-box-comp">
+            <label>Year : </label>
+            <p>${year}</p>
+          </div>
+          <div class="unread-box-comp">
+            <label>Is Complete : </label>
+            <p>${isComplete}</p>
+          </div>
+          <div class="button-box">
+            <button class="hapus-btn" onclick="deleteUnreadBooks(${id})">Hapus Buku</button>
+            <button class="pindah-btn" onclick="moveUnreadBooks(${id})">Pindahkan Buku</button>
+          </div>
+        </div>
+      `;
+    });
+
+    const newData = getReadBooks.filter((x) => x.id !== findObjects.id);
+    localStorage.setItem("readBookItems", JSON.stringify(newData));
+
+    localStorage.setItem("unreadBookItems", JSON.stringify(unreadBookShelf));
+
+    return window.location.reload();
+  } catch (error) {
+    throw error;
+  }
+};
+
+const moveUnreadBooks = async (ids) => {
+  document.getElementById(`unread-box-${ids}`).remove();
+
+  try {
+    console.log(await ids);
+
+    let newReadArray = [];
+
+    const getUnreadBooks = await JSON.parse(
+      localStorage.getItem("unreadBookItems")
+    );
+
+    const findObj = await getUnreadBooks.findIndex((object) => {
+      object.id === ids;
+
+      return (object.isComplete = "true");
+    });
+
+    const findObjects = getUnreadBooks[findObj];
+    newReadArray.push(findObjects);
+    readBookShelf.push(findObjects);
+
+    const container = document.getElementById("read-book-shelf");
+    newReadArray.map((newDatas) => {
+      const { id, title, author, year, isComplete } = newDatas;
+
+      container.innerHTML += `
+        <div class="read-box" id="read-box-${id}">
+          <p class="text-id">Book ID ${id}</p>
+          <div class="read-box-comp">
+            <label>Book Title : </label>
+            <p>${title}</p>
+          </div>
+          <div class="read-box-comp">
+            <label>Book Author : </label>
+            <p>${author}</p>
+          </div>
+          <div class="read-box-comp">
+            <label>Year : </label>
+            <p>${year}</p>
+          </div>
+          <div class="read-box-comp">
+            <label>Is Complete : </label>
+            <p>${isComplete}</p>
+          </div>
+          <div class="button-box">
+            <button class="hapus-btn" onclick="deleteReadBooks(${id})">Hapus Buku</button>
+            <button class="pindah-btn" onclick="moveReadBooks(${id})">Pindahkan Buku</button>
+          </div>
+        </div>
+      `;
+    });
+
+    const newData = getUnreadBooks.filter((x) => x.id !== findObjects.id);
+    localStorage.setItem("unreadBookItems", JSON.stringify(newData));
+
+    localStorage.setItem("readBookItems", JSON.stringify(readBookShelf));
+
+    return window.location.reload();
+  } catch (error) {
+    throw error;
+  }
 };

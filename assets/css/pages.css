@@ -1,3 +1,7 @@
+.content.dark {
+  background-color: black;
+}
+
 .pages {
   padding: 1rem;
   display: none;
@@ -15,9 +19,17 @@
   margin-bottom: 0.5rem;
 }
 
+.pages-header h2.dark {
+  color: #fffffe;
+}
+
 .pages-header p {
   font-size: 0.9rem;
   color: rgb(91, 91, 91);
+}
+
+.pages-header p.dark {  
+  color: #94a1b2;
 }
 
 .pages-content {
@@ -41,8 +53,16 @@
   filter: drop-shadow(0 0 2px white);
 }
 
+.pages-content-box i.dark {  
+  filter: drop-shadow(0 0 2px rgb(125, 125, 125));
+}
+
 .info h1 {
   margin-bottom: 0.4rem;
+}
+
+.info h1.dark {
+  color: #fffffe;
 }
 
 .bookshelf {
@@ -57,12 +77,29 @@
 
 .bookshelf-content {
   display: grid;
-  grid-template-columns: 37.5% 57.5%;
-  gap: 5%;
+  grid-template-columns: 29% 69%;
+  gap: 2%;  
+}
+
+.bookshelf-content-form {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 0.1rem solid darkgray;
+}
+
+.bookshelf-content-form.dark {
+  border: none;  
+  background-color: #1a1818;
+  box-shadow: 0 0 5px #2b2b2b;
 }
 
 .bookshelf-content-form h3 {
   margin-bottom: 1rem;
+  text-align: center;
+}
+
+.bookshelf-content-form h3.dark {
+  color: #fffffe;
 }
 
 .form-box {
@@ -74,12 +111,25 @@
   margin-bottom: 0.4rem;
 }
 
+.form-box label.dark {
+  color: #94a1b2;
+}
+
 .form-box input {
   padding: 0.8rem 0.5rem;
   outline: none;
   border: none;
   background-color: rgb(232, 232, 232);
   width: 100%;
+}
+
+#complete {
+  padding: 0.8rem 0.5rem;
+  width: 100%;  
+}
+
+#complete option {
+  padding: 1rem;
 }
 
 .form-box-btn .add-btn {
@@ -91,72 +141,219 @@
   cursor: pointer;
 }
 
+.form-box-btn .add-btn.dark {  
+  background-color: #7f5af0;    
+}
+
 .form-box-btn .add-btn:hover {  
-  background-color: #232946;
+  background-color: #6a47d3;    
 }
 
-.bookshelf-container h3 {
+.bookshelf-container {
+  display: grid;
+  grid-template-columns: 49% 49%;
+  gap: 2%;
+}
+
+.completed-bookshelf {
+  border: 0.1rem solid darkgray;
+  border-top-left-radius: 1rem;  
+  border-bottom-left-radius: 1rem;  
+  height: 530px;  
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.completed-bookshelf.dark {
+  border: none;  
+  height: 530px;  
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #1a1818;
+  box-shadow: 0 0 5px #2b2b2b;
+}
+
+.completed-bookshelf h3 {
   margin-bottom: 1rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: #4c5db3;
+  color: #fffffe;
+  padding: 1rem;
+  z-index: 5;
 }
 
-.bookshelf-read {
-  margin-bottom: 2rem;
-  height: 200px;
-  overflow: auto;
+.completed-bookshelf h3.dark {  
+  background-color: #323232;  
 }
 
-.bookshelf-unread {
-  height: 200px;
-  overflow: auto;
-}
-
-table {
+.uncompleted-bookshelf {
+  border: 0.1rem solid darkgray;
+  border-top-left-radius: 1rem;  
+  border-bottom-left-radius: 1rem;    
+  height: 530px;
   width: 100%;
-  table-layout: auto;   
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-table .table-header {
-  background-color: #232946;
+.uncompleted-bookshelf {
+  border: 0.1rem solid darkgray;
+  border-top-left-radius: 1rem;  
+  border-bottom-left-radius: 1rem;    
+  height: 530px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.uncompleted-bookshelf.dark {
+  border: none;  
+  height: 530px;  
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #1a1818;
+  box-shadow: 0 0 5px #2b2b2b;
+}
+
+.uncompleted-bookshelf h3 {
+  margin-bottom: 1rem;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  background-color: #36427f;
+  color: #fffffe;
+  padding: 1rem;
+  z-index: 5;
+}
+
+.read-box {
+  background-color: #e8ecff;
+  padding: 1rem;
+  margin: 1rem;
+  position: relative;
+  box-shadow: 0 0 5px rgb(158, 158, 158);
+  border-radius: 0.5rem;
+  width: auto;
+}
+
+.read-box.dark {
+  background-color: #0a0b0e;
+  padding: 1rem;
+  margin: 1rem;
+  position: relative;
+  box-shadow: 0 0 5px rgb(0, 0, 0);
+  border-radius: 0.5rem;
+  width: auto;
   color: #fffffe;
 }
 
-.bookshelf-read table, 
-.bookshelf-read tr, 
-.bookshelf-read th, 
-.bookshelf-read td {
-  padding: 0.8rem;
-  border: 0.1rem solid black;
-  border-collapse: collapse;
-  text-align: center;
+.read-box .read-box-comp {
+  margin-bottom: 0.5rem;
 }
 
-.bookshelf-read .fa-trash-can,
-.bookshelf-unread .fa-trash-can {
-  color: red;
+.read-box .unread-box-comp {
+  margin-bottom: 0.8rem;
 }
 
-.bookshelf-unread table, 
-.bookshelf-unread tr, 
-.bookshelf-unread th, 
-.bookshelf-unread td {
-  padding: 0.8rem;
-  border: 0.1rem solid black;
-  border-collapse: collapse;
-  text-align: center;
+.read-box label {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: #8f8f8f;
+  padding: 0;
+  margin: 0;
 }
 
+.read-box label.dark {  
+  color: #94a1b2;  
+}
 
-.bookshelf-read button, 
-.bookshelf-unread button {
+.read-box .text-id {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: rgb(107, 107, 107);
+  font-size: 0.8rem;
+  padding: 1rem;
+}
+
+.read-box .button-box {  
+  margin-top: 1rem;
+}
+
+.read-box .button-box button {
+  padding: 0.5rem 0.8rem;
+  border: none;
   cursor: pointer;
 }
 
-#complete {
-  padding: 0.8rem 0.5rem;
-  width: 100%;  
+.button-box .hapus-btn {
+  background-color: rgb(171, 63, 63);
+  margin-right: 0.5rem;
+  color: #e3e3e3;
 }
 
-#complete option {
-  padding: 1rem;
+.button-box .hapus-btn:hover {
+  background-color: rgb(156, 11, 11);
+  color: #fffffe;
+}
+
+.button-box .pindah-btn {
+  background-color: rgb(26, 126, 26);
+  color: #e3e3e3;
+}
+
+.button-box .pindah-btn:hover {
+  background-color: rgb(11, 81, 11);
+  color: #fffffe;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b4b4b4;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8f8f8f;  
+}
+
+@media screen and (max-width: 430px) {
+  .pages-content {
+    display: grid;
+    grid-template-columns: 100%;    
+  }
+
+  .bookshelf-content {
+    display: grid;
+    grid-template-columns: 100%;    
+  }
+
+  .bookshelf-container {
+    display: grid;
+    grid-template-columns: 100%;    
+  }
+
+  .bookshelf-container {
+    display: grid;
+    grid-template-columns: 100%;    
+  }  
+
+  .completed-bookshelf {    
+    height: 400px;      
+  }  
+  
+  .uncompleted-bookshelf {    
+    height: 400px;    
+  }
 }
 

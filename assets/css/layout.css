@@ -1,9 +1,17 @@
 .main {
   display: grid;
   grid-template-columns: auto;
+  height: 100vh;
 }
 
 .main.show {
   display: grid;
   grid-template-columns: 20% 80%;
+}
+
+@media screen and (max-width: 430px) {   
+  .main.show {
+    display: grid;
+    grid-template-columns: 100%;
+  }
 }

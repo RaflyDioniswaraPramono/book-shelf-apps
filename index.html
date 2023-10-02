@@ -20,12 +20,15 @@
       referrerpolicy="no-referrer"
     />
   </head>
-  <body>        
+  <body>
     <main id="main" class="main show">
       <aside id="sidenav" class="sidenav show">
-        <div class="sidenavbar-header">
+        <div id="_sidenavbar-header" class="sidenavbar-header">
           <a href="/">
             <h2>Bookshelf Apps</h2>
+          </a>
+          <a class="hidden-close-sidenav" href="##" onclick="openSidenav()">
+            <i class="fa-solid fa-bars-staggered"></i>
           </a>
         </div>
         <div class="sidenavbar-links">
@@ -41,12 +44,12 @@
           <div id="dashboard-box" class="subcontent-dashboard show">
             <button
               id="btn-main"
-              class="btn active"
+              class="btn"
               onclick="changePages('main')"
             >
               Main
             </button>
-            <button id="btn-book" class="btn" onclick="changePages('books')">
+            <button id="btn-book" class="btn active" onclick="changePages('books')">
               Bookshelf
             </button>
           </div>
@@ -59,15 +62,17 @@
             Themes <i id="icon-theme" class="fa-solid fa-caret-right"></i>
           </button>
           <div id="theme-box" class="subcontent-themes">
-            <button>
+            <button onclick="lightTheme()">
               <i class="fa-regular fa-sun"></i>Light Theme (default)
             </button>
-            <button><i class="fa-solid fa-moon"></i>Dark Theme</button>
+            <button onclick="darkTheme()">
+              <i class="fa-solid fa-moon"></i>Dark Theme
+            </button>
           </div>
         </div>
       </aside>
       <div class="content">
-        <div class="topnavbar">
+        <div id="_topnavbar" class="topnavbar">
           <div class="topnavbar-toggle">
             <a href="##" onclick="openSidenav()">
               <i class="fa-solid fa-bars-staggered"></i>
@@ -84,9 +89,9 @@
               <i class="fa-solid fa-circle-user"></i>
             </a>
           </div>
-        </div>        
-        <div id="main-page" class="pages">          
-          <div class="pages-header">            
+        </div>
+        <div id="main-page" class="pages">
+          <div class="pages-header">
             <h2>Main Page</h2>
             <p>
               In this pages you can see the amount of books, amount of books
@@ -102,7 +107,7 @@
               "
             >
               <div class="info">
-                <h1 id="total-books"></h1>
+                <h1 id="total-books">0</h1>
                 <p>Total Book</p>
               </div>
               <i class="fa-solid fa-book"></i>
@@ -135,16 +140,12 @@
             </div>
           </div>
         </div>
-        <div id="book-page" class="bookshelf show">
-          <div id="alert" class="alert-box">
-            <h1 id="alert-type"></h1>
-            <p id="alert-text"></p>
-          </div>
+        <div id="book-page" class="bookshelf show">          
           <div class="pages-header">
             <h2>Bookshelf</h2>
             <p>
-              In this pages you can create, moving, finished, and unred books by
-              fill the field.
+              In this pages you can create, moving, read, and unred books by
+              fill the field from the form.
             </p>
             <p class="note">
               <strong>Note</strong> : you only have 2 books shelf. One for read
@@ -152,12 +153,18 @@
             </p>
           </div>
           <div class="bookshelf-content">
-            <div class="bookshelf-content-form">
+            <div id="_bookshelf-content-form" class="bookshelf-content-form">
               <h3>Bookshelf Registry</h3>
               <form onsubmit="submitHandler(event.preventDefault())">
                 <div class="form-box">
                   <label for="title">Title</label>
-                  <input id="title" type="text" autocomplete="off" required autofocus/>
+                  <input
+                    id="title"
+                    type="text"
+                    autocomplete="off"
+                    required
+                    autofocus
+                  />
                 </div>
                 <div class="form-box">
                   <label for="author">Author</label>
@@ -180,37 +187,13 @@
               </form>
             </div>
             <div class="bookshelf-container">
-              <h3>Selesai dibaca</h3>
-              <div class="bookshelf-read">
-                <table id="table">
-                  <thead>
-                    <tr class="table-header">                      
-                      <th>Title</th>
-                      <th>Author</th>
-                      <th>Year</th>
-                      <th>Is Complete</th>
-                      <th>Delete</th>
-                      <th>Move</th>
-                    </tr>
-                  </thead>
-                  <tbody id="read-table-body"></tbody>
-                </table>
+              <div id="reads" class="completed-bookshelf">
+                <h3>Sudah selesai dibaca</h3>
+                <div id="read-book-shelf"></div>
               </div>
-              <h3>Belum selesai dibaca</h3>
-              <div class="bookshelf-unread">
-                <table>
-                  <thead>
-                    <tr class="table-header">                      
-                      <th>Title</th>
-                      <th>Author</th>
-                      <th>Year</th>
-                      <th>Is Complete</th>
-                      <th>Delete</th>
-                      <th>Move</th>
-                    </tr>
-                  </thead>
-                  <tbody id="unread-table-body"></tbody>
-                </table>
+              <div id="unreads" class="uncompleted-bookshelf">
+                <h3>Belum selesai dibaca</h3>
+                <div id="unread-book-shelf"></div>
               </div>
             </div>
           </div>
@@ -222,6 +205,7 @@
     <script src="./assets/js/openDropdown.js"></script>
     <script src="./assets/js/changePages.js"></script>
     <script src="./assets/js/formHandler.js"></script>
-    <script src="./assets/js/getLocalStorageBook.js"></script>
+    <script src="./assets/js/getTotalLocalStorage.js"></script>
+    <script src="./assets/js/darkTheme.js"></script>
   </body>
 </html>
